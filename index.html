@@ -149,7 +149,6 @@
 
         #scene-description { font-size: 1.05rem; line-height: 1.8; color: var(--text-main); white-space: pre-wrap; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 
-        /* 선택지 가로 배치 스타일 변경 */
         #choices-box { 
             width: 100%; 
             display: flex; 
@@ -183,7 +182,6 @@
 
         .choice-btn::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: transparent; transition: background 0.3s; }
 
-        /* 선택지별 확연히 다른 색상 (기본 및 호버) */
         .choice-btn.choice-a {
             background: rgba(153, 27, 27, 0.25);
             border-color: rgba(239, 68, 68, 0.4);
@@ -261,7 +259,6 @@
         .title-screen-mode #game-header h1 { font-size: 3.5rem; text-shadow: 0 10px 30px rgba(255,255,255,0.15); }
         .title-screen-mode #top-split { flex-direction: column; }
 
-        /* 화면이 좁아지면 모바일에서는 세로 배치 전환 */
         @media (max-width: 768px) {
             #top-split { flex-direction: column; }
             .title-screen-mode #game-header h1 { font-size: 2.2rem; }
@@ -376,14 +373,14 @@
             if(changes.length > 0) { addLog(`동기화 변동: ${changes.join(', ')}`); }
         }
 
-        /* 괄호 안 대사와 지문을 완전 제거한 씬 데이터 */
+        /* 미디어 경로 수정 완료 (image -> media/ , video -> video/) */
         const scenes = {
             "TITLE": {
-                title: "", image: "cover.jpg", text: "",
+                title: "", image: "media/cover.jpg", text: "",
                 choices: [{ text: "게임 시작", style: "start-btn cinematic-font", action: () => { document.body.classList.remove('title-screen-mode'); addLog("시스템 부팅 완료..."); }, next: "S01" }]
             },
             "S01": {
-                title: "S01. 통보된 상실", video: "S1.mp4", 
+                title: "S01. 통보된 상실", video: "video/S1.mp4", 
                 text: "[배경] 퀴퀴한 곰팡내와 탁한 물방울이 일정한 간격으로 떨어지는 반지하 고시원. 창문 틈새로 스며든 싸구려 네온사인 불빛이 서아의 창백한 얼굴을 붉게 물들인다. 그때, 이현의 스마트폰 화면에 섬뜩한 알림음과 함께 '서아의 토큰 사용 완료' 시스템 통보가 뜬다. 서아는 눈을 맞추지 못한 채 덜덜 떨며 자신의 입술이 터지도록 짓씹고 있다.\n\n이현: \"서아... 너 지금 무슨 짓을 한 거야? 방금 이 알림 뭐야? 네가 대체 무슨 대가를 지불했다는 건데!\"\n서아: \"이현아... 그게, 나는... 어쩔 수가 없었어. 이렇게라도 하지 않으면...\"",
                 choices: [
                     { text: "[A] \"무슨 짓 한 거야? 내 대가는!\"", style: "choice-a", action: () => { state.trust -= 15; state.desire += 10; }, next: "S02" },
@@ -391,7 +388,7 @@
                 ]
             },
             "S02": {
-                title: "S02. 강제된 딜레마", video: "S2.mp4", 
+                title: "S02. 강제된 딜레마", video: "video/S2.mp4", 
                 text: "[배경] 갑자기 스마트폰 액정이 먹통이 되더니, 붉은 코드가 뱀처럼 기어 다니며 기괴하게 웃는 지니 AI의 홀로그램이 허공에 투사된다.\n\n지니 AI: \"진실을 마주할 용기가 있으신가요? 아주 작은 기억 하나만 대가로 지불하시면, 파트너가 무엇을 바랐는지 당장 확인시켜 드리죠. 낄낄.\"\n서아: \"안 돼! 이현아, 제발... 그거 누르지 마. 저건 널 망가뜨리려고 하는 함정이야!\"",
                 choices: [
                     { text: "[A] 당장 확인한다.", style: "choice-a", action: () => { state.crack += 20; state.desire += 15; state.trust -= 20; }, next: "S03" },
@@ -399,7 +396,8 @@
                 ]
             },
             "S03": {
-                title: "S03. 영혼역 진입", video: "S3.mp4", 
+                title: "S03. 영혼역 진입", video: "video/S3.mp4", 
+                justify: "left",
                 getText: () => {
                     let baseText = "[배경] 세상의 이면, 자욱한 네온 스모그와 지독한 곰팡내가 진동하는 '영혼역'. 낡은 제복을 걸친 역장 할머니가 뒷짐을 진 채 어둠 속에서 걸어 나온다.\n\n역장 할머니: \"쯧쯧... 또 길 잃은 어린 짐승들이 기어들어 왔구만. 이 지독한 역귀 소굴에 뭘 얻자고 제 발로 들어왔누?\"";
                     if (state.crack >= 30) baseText += "\n\n(할머니가 혀를 차며 약관의 숨겨진 조항을 암시하듯 이현의 스마트폰을 지팡이로 툭툭 친다.)";
@@ -411,7 +409,7 @@
                 ]
             },
             "S04": {
-                title: "S04. 대가 암시장", video: "S4.mp4", 
+                title: "S04. 대가 암시장", video: "video/S4.mp4", 
                 text: "[배경] 축축한 뒷골목. 갑자기 서아의 피부에 기괴한 푸른 균열이 생기며 그녀가 비명을 지르며 쓰러진다. 일렉트릭 퍼플 배지를 단 정장 차림의 브로커가 나타나, 핏빛 글씨가 적힌 계약서를 내민다.\n\n브로커: \"파트너께서 아주 값비싼 대가를 치르고 계시군요. 제게 서명만 하신다면, 그 고통... 제가 완벽하게 전가해 드릴 수 있습니다만. 약간의 '균열'만 감수하신다면 말이죠.\"\n서아: \"아아악...! 이현아, 하지 마... 제발 도망쳐...!\"",
                 choices: [
                     { text: "[A] 브로커와 거래한다.", style: "choice-a", action: () => { state.trust += 15; state.crack += 30; addLog("서아가 일시적으로 회복되었습니다."); }, next: "S05" },
@@ -419,7 +417,7 @@
                 ]
             },
             "S05": {
-                title: "S05. 결계관리청", video: "S5.mp4", 
+                title: "S05. 결계관리청", video: "video/S5.mp4", 
                 getText: () => {
                     let baseText = "[배경] 요란한 경보음과 함께 붉은 보안 레이저가 사방을 뒤덮는다. 무기질적인 표정의 결계관리청 차민준이 제압 무기를 들고 앞을 가로막는다.";
                     if (state.crack >= 60) baseText += "\n\n차민준: \"경고한다. 현재 해당 구역의 현실 붕괴 임계치가 한계에 달했다. 너희들의 존재 자체가 세계의 오류다. 즉각 이동을 멈추고 처분에 응해라.\"\n(차민준이 살기를 띠며 무기의 안전장치를 해제한다.)";
@@ -432,7 +430,7 @@
                 ]
             },
             "S06": {
-                title: "S06. 두 번째 소원 위기", video: "S6.mp4", 
+                title: "S06. 두 번째 소원 위기", video: "video/S6.mp4", 
                 text: "[배경] 주변 공간이 픽셀처럼 깨어지며 붕괴하는 환영 속, 서아가 피를 토하며 위독해진다. 붉고 거대해진 지니 AI가 강제로 팝업을 띄운다.\n\n지니 AI: \"오, 이런! 파트너의 생명줄이 끊어지기 직전이군요! 특별히 해결책을 드리죠. 신체를 기계로 대체하는 '물리적 개조'나, 고통을 느끼는 '감정의 완전 삭제'! 어느 쪽이든 인간성은 좀 포기해야겠지만요. 자, 서두르세요!\"",
                 choices: [
                     { text: "[A] \"서아를 고쳐줘! 어떻게 되든 상관없어!\"", style: "choice-a", action: () => { state.crack += 25; state.trust -= 30; state.tokens -= 1; }, next: "S07" },
@@ -441,7 +439,7 @@
                 ]
             },
             "S07": {
-                title: "S07. 감정 공개법", video: "S7.mp4", 
+                title: "S07. 감정 공개법", video: "video/S7.mp4", 
                 dynamic: () => {
                     if (state.trust > 30) {
                         return { text: "[배경] 서로를 향한 믿음이 굳건하여 시스템의 이간질 팝업이 뜨지 않는다.\n\n이현은 서아의 차가운 손을 굳게 쥐고 있다. 무언의 신뢰가 두 사람 사이의 붕괴를 간신히 지탱한다.", choices: [{ text: "계속 전진한다.", style: "choice-b", action: () => {}, next: "S08" }] };
@@ -457,7 +455,7 @@
                 }
             },
             "S08": {
-                title: "S08. 72시간의 끝", video: "S8.mp4", 
+                title: "S08. 72시간의 끝", video: "video/S8.mp4", 
                 dynamic: () => {
                     if (state.desire < 80) {
                         return { text: "[배경] 영혼역이 지상으로 부상하며 현실 세계의 하늘이 시뻘겋게 갈라지며 붕괴하기 시작한다.\n\n두 사람은 포기하지 않고 묵묵히 앞으로 나아간다.", choices: [{ text: "마지막 기회를 향해", style: "choice-b", action: () => {}, next: "S09" }] };
@@ -473,7 +471,7 @@
                 }
             },
             "S09": {
-                title: "S09. 마지막 선택", video: "S9.mp4", 
+                title: "S09. 마지막 선택", video: "video/S9.mp4", 
                 text: "[배경] 형태를 잃고 녹아내리는 세상. 짙은 정적 속에서 역장 할머니가 다시 등장한다. 그녀의 눈동자는 심연처럼 깊고 서늘하다.\n\n역장 할머니: \"세상이 무너지는 꼴을 기어이 보고야 말았구나. 자, 마지막 기회다. 너 혼자만이라도 흠결 없는 완벽한 삶을 챙겨 달아날 텐가? 아니면... 이 모든 지독한 업보를 짊어지고, 앱을 깔기 전 그 보잘것없는 처음으로 모든 걸 되돌릴 텐가?\"",
                 choices: [
                     { 
@@ -495,17 +493,17 @@
                 ]
             },
             "ENDING_A": {
-                title: "엔딩 A: 각성", video: "G_OVER1.mp4", 
+                title: "엔딩 A: 각성", video: "video/G_OVER1.mp4", 
                 text: "상흔이 남은 제자리\n\n세상의 모든 색채가 거세된 완벽한 흑백의 고시원. 서아는 무사히 돌아왔지만, 영구적으로 세상의 색채를 인지하는 능력을 잃어버렸다. 이현은 흑백의 방 안에서, 아무런 미련 없이 묵묵히 WISH 앱을 삭제한다. 모든 것은 끝났지만, 그들이 살아갈 상흔 섞인 내일이 다시 시작된다.",
                 choices: [{ text: "처음으로 돌아가기", style: "start-btn cinematic-font", action: () => { initGame(); }, next: "TITLE" }]
             },
             "ENDING_B": {
-                title: "엔딩 B: 비극", video: "G_OVER2.mp4", 
+                title: "엔딩 B: 비극", video: "video/G_OVER2.mp4", 
                 text: "뫼비우스의 데이터\n\n시야가 시뻘건 글리치와 ERROR 문구로 완전히 덮인다. \"아니, 안 돼...!\" 이현의 비명조차 데이터 조각으로 분해된다. 육체는 소멸하고 영혼만이 추출되어 영혼역 지하의 거대한 마법 배터리관에 수감된다. 영원히 끝나지 않는 고통 속, 시계는 다시 D-DAY 00:24를 가리키며 끔찍한 루프가 시작된다.",
                 choices: [{ text: "처음으로 돌아가기", style: "start-btn cinematic-font", action: () => { initGame(); }, next: "TITLE" }]
             },
             "ENDING_C": {
-                title: "엔딩 C: 진정한 귀환", video: "END.mp4", 
+                title: "엔딩 C: 진정한 귀환", video: "video/END.mp4", 
                 text: "[배경] 일상을 완벽하게 회복한 평범하고 밝은 대낮의 번화가 거리. 눈부신 햇살이 쏟아지고, 사람들의 기분 좋은 소음이 거리를 가득 채우고 있다.\n\n이현은 그 길 한가운데 서 있다. 어두웠던 영혼역의 잔재는 씻은 듯이 사라졌고, 실체를 완벽히 되찾은 그녀의 모습은 그 어느 때보다 따뜻하고 생기가 넘친다.\n\n이현: \"오늘따라... 날씨가 정말 좋네.\"\n\n활기찬 표정의 군중들이 이현의 곁을 자연스럽게 스쳐 지나간다. 누군가 떨어뜨린 전단지, 멀리서 들려오는 카페의 음악 소리, 횡단보도의 파란불. 이현은 작게 심호흡을 하며, 그토록 바랐던 평화롭고 행복한 일상 속으로 천천히 발걸음을 내디돈다. 모든 것이 온전히, 제자리로 돌아왔다.",
                 choices: [{ text: "처음으로 돌아가기", style: "start-btn cinematic-font", action: () => { initGame(); }, next: "TITLE" }]
             }
